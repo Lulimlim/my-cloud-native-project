@@ -1,0 +1,26 @@
+name: Package Docker Image to Artifact
+
+on:
+  # 允许我们手动触发这个工作流
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: 'The Docker image to package (e.g., openjdk:17-jre-slim)'
+        required: true
+        default: 'openjdk:17-jre-slim'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull ${{ github.event.inputs.image_name }}
+
+      - name: Save Docker Image to .tar
+        run: docker save -o image.tar ${{ github.event.inputs.image_name }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image-tar
+          path: image.tar
