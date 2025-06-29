@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       image_name:
-        description: 'The Docker image to package (e.g., openjdk:17-jre-slim)'
+        description: 'The Docker image to package (e.g., 17-jre-slim-bullseye)'
         required: true
-        default: 'openjdk:17-jre-slim'
+        default: '17-jre-slim-bullseye'
 
 jobs:
   package:
